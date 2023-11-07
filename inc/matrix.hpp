@@ -157,12 +157,63 @@ public:
 
     struct ProxyRow
     {
-        
+        T* proxy_row_;
+
+        const size_t num_of_cols_ = 0;
+
+        ProxyRow(T* row, const size_t cols) : proxy_row_{row}, num_of_cols_{cols} {}
+
+        T& operator[](size_t n)     { return proxy_row_[n]; }
+
+        const T& operator[](size_t n) const     { return proxy_row_[n]; }
     };
+
+    ProxyRow operator[](size_t n)
+    {
+        ProxyRow elem(data_ + n * cols_, cols_);
+
+        return elem;
+    }
+
+    const ProxyRow operator[](size_t n) const
+    {
+        ProxyRow elem(data_ + n * cols_, cols_);
+
+        return elem;
+    }
+    
 
 //================================================================================//
 
-    void Dump(std::ostream& os) const
+    Matrix& Negate() &
+    {
+        size_t size = rows_ * cols_;
+
+        for (size_t i = 0; i < size; i++)
+            data_[i] = -data_[i];
+
+        return *this;
+    }
+
+    bool IsEqual(const Matrix& other) const
+    {
+        size_t size1 = rows_ * cols_, size2 = other.rows_ * other.cols_;
+
+        if (size1 != size2)
+            return false;
+
+        for (size_t i = 0; i < size1; i++)
+        {
+            if (data_[i] != other.data_[i])
+                return false;
+        }
+
+        return true;
+    }
+
+//================================================================================//
+
+    void Dump(std::ostream& os = std::cout) const
     {
         os << "//==========Start Matrix Dump==========//" << std::endl;
 

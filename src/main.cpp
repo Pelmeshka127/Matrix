@@ -8,9 +8,7 @@ int main()
 
     Matrix<int> m1(2,2,2);
 
-    Matrix<int> m2(3,3,3);
-
-    m1 = m2;
+    m1.Dump();
 
     return 0;
 }
