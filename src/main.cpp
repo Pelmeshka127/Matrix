@@ -1,23 +1,16 @@
 #include <vector>
 
-#include "matrix.hpp"
+#include "../inc/matrix.hpp"
 
 int main()
 {
-    std::vector<int> data{};
+    using namespace MatrixSpace;
 
-    for (int i = 0; i < 4; i++)
-        data.push_back(i);
+    Matrix<int> m1(2,2,2);
 
-    Matrix::Matrix<int> matrix(2, 2, data.begin(), data.end());
+    Matrix<int> m2(3,3,3);
 
-    matrix.Dump(std::cout);
-
-    Matrix::Matrix<int> nmatr(2,2,1);
-
-    nmatr = matrix;
-
-    nmatr.Dump(std::cout);
+    m1 = m2;
 
     return 0;
 }

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-namespace Matrix
+namespace MatrixSpace
 {
 
 //================================================================================//
@@ -37,20 +37,14 @@ public:
 
 //================================================================================//
 
-    Matrix(size_t rows, size_t cols, T val = T{}) : rows_{rows}, cols_{cols}  // Constructor
+    Matrix(size_t rows, size_t cols, T val = T{}) : rows_{rows}, cols_{cols} // Constructor
     {
         size_t size = rows_ * cols_;
 
         if (!size)
             return;
 
-        data_ = new T(size);
-
-        if (data_ == nullptr)
-        {
-            std::cerr << "Failed allocation memory for matrix data in " << __PRETTY_FUNCTION__ << std::endl;
-            return;
-        }
+        data_ = new T[size];
 
         for (size_t i = 0; i < size; i++)
             data_[i] = val;
@@ -66,13 +60,7 @@ public:
         if (!size)
             return;
 
-        data_ = new T(size);
-
-        if (data_ == nullptr)
-        {
-            std::cerr << "Failed allocation memory for data in " << __PRETTY_FUNCTION__ << std::endl;
-            return;
-        }
+        data_ = new T[size];
 
         int i = 0;
 
@@ -92,13 +80,7 @@ public:
         if (!size)
             return;
 
-        data_ = new T(size);
-
-        if (data_ == nullptr)
-        {
-            std::cerr << "Failed allocation memory for data in " << __PRETTY_FUNCTION__ << std::endl;
-            return;
-        }
+        data_ = new T[size];
 
         std::copy(rhs.data_, rhs.data_ + size, data_);
     }
@@ -122,15 +104,16 @@ public:
     {
         // std::cout << "Copy Asgn" << std::endl;
 
-        if (rows_ * cols_ != rhs.rows_ * rhs.cols_ && rows_ != rhs.rows_ && cols_ != rhs.cols_)
-            return *this;
-
         if (this == &rhs)
             return *this;
 
-        Matrix<T> temp{rhs};
+        Matrix tmp(rhs);
 
-        *this = std::move(temp);
+        std::swap(data_, tmp.data_);
+
+        std::swap(rows_, tmp.rows_);
+
+        std::swap(cols_, tmp.cols_);
 
         return *this;
     }
@@ -141,17 +124,18 @@ public:
     {
         // std::cout << "Move Asgn" << std::endl;
 
-        if (rows_ * cols_ != rhs.rows_ * rhs.cols_ && rows_ != rhs.rows_ && cols_ != rhs.cols_)
-            return *this;
-
         if (this == &rhs)
             return *this;
+
+        delete [] data_;
+
+        data_ = rhs.data_;
+
+        rhs.data_ = nullptr;
 
         std::swap(rows_, rhs.rows_);
 
         std::swap(cols_, rhs.cols_);
-
-        std::swap(data_, rhs.data_);
 
         return *this;
     }
@@ -162,12 +146,19 @@ public:
     {
         // std::cout << "Destructor" << std::endl;
 
-        delete data_;
+        delete [] data_;
 
         rows_ = 0;
 
         cols_ = 0;
     }
+
+//================================================================================//
+
+    struct ProxyRow
+    {
+        
+    };
 
 //================================================================================//
 
