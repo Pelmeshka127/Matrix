@@ -66,24 +66,17 @@ TEST(proxy_row_test, proxy_row_test)
 
 //================================================================================//
 
-TEST(negate_test, negate_test)
+TEST(simple_determinant, simple_determinant)
 {
     using namespace MatrixSpace;
 
-    std::vector<int> data{};
+    std::vector<int> data{3,0,0,1};
 
-    for (int i = 0; i < 4; i++)
-        data.push_back(i);
-    
-    Matrix<int> m1(2, 2, data.begin(), data.end());
+    Matrix<int> m(2,2, data.begin(), data.end());
 
-    Matrix<int> m2 = m1;
+    // m.Dump();
 
-    m2.Negate();
-
-    ASSERT_EQ(m1[0][0], m2[0][0]);
-
-    ASSERT_EQ(m1[0][1], -m2[0][1]);
+    ASSERT_EQ(3, m.DiagonalProduct());
 }
 
 //================================================================================//

@@ -185,58 +185,75 @@ public:
 
 //================================================================================//
 
-    Matrix& Negate() &
-    {
-        size_t size = rows_ * cols_;
+    bool    IsEqual(const Matrix& other) const;
 
-        for (size_t i = 0; i < size; i++)
-            data_[i] = -data_[i];
+    T       DiagonalProduct() const;
 
-        return *this;
-    }
-
-    bool IsEqual(const Matrix& other) const
-    {
-        size_t size1 = rows_ * cols_, size2 = other.rows_ * other.cols_;
-
-        if (size1 != size2)
-            return false;
-
-        for (size_t i = 0; i < size1; i++)
-        {
-            if (data_[i] != other.data_[i])
-                return false;
-        }
-
-        return true;
-    }
+    void    Dump(std::ostream& os = std::cout) const;
 
 //================================================================================//
 
-    void Dump(std::ostream& os = std::cout) const
+}; // end of Matrix class
+
+//================================================================================//
+
+template<typename T>
+bool Matrix<T>::IsEqual(const Matrix& other) const
+{
+    size_t size1 = rows_ * cols_, size2 = other.rows_ * other.cols_;
+
+    if (size1 != size2)
+        return false;
+
+    for (size_t i = 0; i < size1; i++)
     {
-        os << "//==========Start Matrix Dump==========//" << std::endl;
-
-        std::cout << "Matrix " << this << std::endl;
-
-        for (size_t row = 0; row < rows_; row++)
-        {
-            std::cout << "||";
-
-            for (size_t col = 0; col < cols_; col++)
-            {
-                os << "  " << data_[row * cols_ + col];
-            }
-
-            std::cout << "  ||";
-
-            os << std::endl;
-        }
-
-        os << "//=============End Matrix Dump==========//" << std::endl;
+        if (data_[i] != other.data_[i])
+            return false;
     }
 
-}; // end of Matrix class
+    return true;
+}
+
+//================================================================================//
+
+template<typename T>
+T Matrix<T>::DiagonalProduct() const
+{
+    T det = 1;
+
+    for (size_t row = 0, col = 0; row < rows_; row++, col++)
+    {
+        det *= data_[row * rows_ + col];
+    }
+
+    return det;
+}
+
+//================================================================================//
+
+template<typename T>
+void Matrix<T>::Dump(std::ostream& os) const
+{
+    os << "//==========Start Matrix Dump==========//" << std::endl;
+
+    std::cout << "Matrix " << this << std::endl;
+
+    for (size_t row = 0; row < rows_; row++)
+    {
+        std::cout << "||";
+
+        for (size_t col = 0; col < cols_; col++)
+        {
+            os << "  " << data_[row * cols_ + col];
+        }
+
+        std::cout << "  ||";
+
+        os << std::endl;
+    }
+
+    os << "//=============End Matrix Dump==========//" << std::endl;
+}
 
 //================================================================================//
 
