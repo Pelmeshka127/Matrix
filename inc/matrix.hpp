@@ -185,9 +185,17 @@ public:
 
 //================================================================================//
 
+public:
+
     bool    IsEqual(const Matrix& other) const;
 
     T       DiagonalProduct() const;
+
+    T       GetMaxInColumn(const size_t col_num) const;
+
+    void    SwapRows(ProxyRow& row1, ProxyRow& row2);
+
+    Matrix  GaussAlgotirhm() const;
 
     void    Dump(std::ostream& os = std::cout) const;
 
@@ -227,6 +235,45 @@ T Matrix<T>::DiagonalProduct() const
     }
 
     return det;
+}
+
+//================================================================================//
+
+template<typename T>
+T Matrix<T>::GetMaxInColumn(const size_t col_num) const
+{
+    T max{};
+
+    for (size_t row = 0; row < rows_; row++)
+    {
+        if (data_[row * rows_ + col_num] > max)
+            max = data_[row * rows_ + col_num];
+    }
+
+    return max;
+}
+
+//================================================================================//
+
+template<typename T>
+void Matrix<T>::SwapRows(ProxyRow& row1, ProxyRow& row2)
+{
+    for (size_t elem = 0; elem < cols_; elem++)
+    {
+        std::swap(row1[elem], row2[elem]);
+    }
+}
+
+//================================================================================//
+
+template<typename T>
+Matrix<T> Matrix<T>::GaussAlgotirhm() const
+{
+    Matrix mtrx(*this);
+
+    mtrx[0][0] = 5;
+
+    return mtrx;
 }
 
 //================================================================================//
