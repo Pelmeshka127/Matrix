@@ -1,14 +1,15 @@
 #include <vector>
 
-#include "../inc/matrix.hpp"
+#include "matrix.hpp"
+#include "double_numbers.hpp"
 
 int main()
 {
     using namespace MatrixSpace;
 
-    Matrix<int> m1(2,2,2);
+    using namespace DoubleNumbers;
 
-    m1.Dump();
+    std::cout << Eps << std::endl;
 
     return 0;
 }

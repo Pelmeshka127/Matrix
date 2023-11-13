@@ -13,7 +13,7 @@ enable_testing()
 
 add_subdirectory(./src)
 
-add_subdirectory(./Tests)
+add_subdirectory(./tests)
 
 target_include_directories(matrix PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 

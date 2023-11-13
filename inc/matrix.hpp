@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include "double_numbers.hpp"
+
 namespace MatrixSpace
 {
 
@@ -187,17 +189,19 @@ public:
 
 public:
 
-    bool    IsEqual(const Matrix& other) const;
+    bool                            IsEqual(const Matrix& other) const;
 
-    T       DiagonalProduct() const;
+    T                               DiagonalProduct() const;
 
-    T       GetMaxInColumn(const size_t col_num) const;
+    T                               Determinant() const;
 
-    void    SwapRows(ProxyRow& row1, ProxyRow& row2);
+    std::pair<size_t, size_t>       GetMaxInColumn(const size_t column) const;
 
-    Matrix  GaussAlgotirhm() const;
+    void                            SwapRows(const size_t row1, const size_t row2);
 
-    void    Dump(std::ostream& os = std::cout) const;
+    T                               GaussAlgotirhm();
+
+    void                            Dump(std::ostream& os = std::cout) const;
 
 //================================================================================//
 
@@ -215,7 +219,7 @@ bool Matrix<T>::IsEqual(const Matrix& other) const
 
     for (size_t i = 0; i < size1; i++)
     {
-        if (data_[i] != other.data_[i])
+        if (!(DoubleNumbers::IsEqual(data_[i], other.data_[i])))
             return false;
     }
 
@@ -240,40 +244,78 @@ T Matrix<T>::DiagonalProduct() const
 //================================================================================//
 
 template<typename T>
-T Matrix<T>::GetMaxInColumn(const size_t col_num) const
+std::pair<size_t, size_t> Matrix<T>::GetMaxInColumn(const size_t col_num) const
 {
-    T max{};
+    std::pair<size_t, size_t> max_elem{col_num, col_num};
 
-    for (size_t row = 0; row < rows_; row++)
+    for (size_t row = col_num; row < rows_; row++)
     {
-        if (data_[row * rows_ + col_num] > max)
-            max = data_[row * rows_ + col_num];
+        if ((std::abs(data_[row * rows_ + col_num]) - std::abs(data_[max_elem.first * rows_ + max_elem.second])) > DoubleNumbers::Eps && 
+            !DoubleNumbers::IsEqual(data_[row * rows_ + col_num], 0))
+        {
+            max_elem.first  = row;
+
+            max_elem.second = col_num;
+        }
+
     }
 
-    return max;
+    return max_elem;
 }
 
 //================================================================================//
 
 template<typename T>
-void Matrix<T>::SwapRows(ProxyRow& row1, ProxyRow& row2)
+void Matrix<T>::SwapRows(const size_t row1, const size_t row2)
 {
-    for (size_t elem = 0; elem < cols_; elem++)
-    {
-        std::swap(row1[elem], row2[elem]);
-    }
+    for (size_t col = 0; col < cols_; col++)
+        std::swap(data_[row1 * rows_ + col], data_[row2 * rows_ + col]);
 }
 
 //================================================================================//
 
 template<typename T>
-Matrix<T> Matrix<T>::GaussAlgotirhm() const
+T Matrix<T>::GaussAlgotirhm()
 {
     Matrix mtrx(*this);
 
-    mtrx[0][0] = 5;
+    int sign = 1;
 
-    return mtrx;
+    for (size_t it = 0; it < mtrx.cols_; it++)
+    {
+        std::pair<size_t, size_t> max_elem = mtrx.GetMaxInColumn(it);
+
+        if (DoubleNumbers::IsEqual(mtrx[max_elem.first][max_elem.second], 0))
+            return 0;
+
+        // std::cout << mtrx[it][it] << " and " << mtrx[max_elem.first][max_elem.second] << std::endl;
+
+        // std::cout << it << " and " << max_elem.first << std::endl;
+
+        if (it != max_elem.first)
+        {
+            // std::cout << "swapping" << std::endl;
+            mtrx.SwapRows(it, max_elem.first);
+
+            sign *= -1;
+
+            max_elem.first = it;
+        }
+    }    
+
+    // mtrx.Dump();
+
+    T det = mtrx.DiagonalProduct() * sign;
+
+    return det;
+}
+
+//================================================================================//
+
+template<typename T>
+T Matrix<T>::Determinant() const
+{
+    return GaussAlgotirhm();
 }
 
 //================================================================================//
