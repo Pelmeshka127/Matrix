@@ -145,7 +145,7 @@ TEST(swap_row_test, swap_row_test)
 
 //================================================================================//
 
-TEST(simple_determinant, simple_determinant)
+TEST(triangle_matrix_determinant, triangle_matrix_determinant)
 {
     using namespace MatrixSpace;
 
@@ -153,7 +153,7 @@ TEST(simple_determinant, simple_determinant)
 
     Matrix<int> m(3,3, data.begin(), data.end());
 
-    ASSERT_EQ(30, m.DiagonalProduct());
+    ASSERT_EQ(30, m.Determinant());
 }
 
 // //================================================================================//
@@ -162,15 +162,13 @@ TEST(gauss_test, gauss_test)
 {
     using namespace MatrixSpace;
 
-    std::vector<int> data{3,4,5,3,5,9,6,10,3};
+    std::vector<double> data{3,4,5,3,5,9,6,10,3};
 
-    Matrix<int> m1(3, 3, data.begin(), data.end());
+    Matrix<double> m1(3, 3, data.begin(), data.end());
 
-    // m1.Dump();
+    int det = m1.Determinant();
 
-    int det = m1.GaussAlgotirhm();
-
-    ASSERT_EQ(5, det);
+    ASSERT_EQ(-45, det);
 }
 
 //================================================================================//

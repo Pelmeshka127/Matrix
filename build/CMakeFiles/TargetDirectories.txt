@@ -1,0 +1,17 @@
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/CMakeFiles/test.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/CMakeFiles/edit_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/CMakeFiles/rebuild_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/src/CMakeFiles/matrix.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/src/CMakeFiles/test.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/src/CMakeFiles/edit_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/src/CMakeFiles/rebuild_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/CMakeFiles/test.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/CMakeFiles/edit_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/CMakeFiles/rebuild_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/ete/CMakeFiles/test.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/ete/CMakeFiles/edit_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/ete/CMakeFiles/rebuild_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/unit/CMakeFiles/unit.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/unit/CMakeFiles/test.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/unit/CMakeFiles/edit_cache.dir
+/Users/pelmeshka127/Desktop/ILab/Matrix/build/tests/unit/CMakeFiles/rebuild_cache.dir
