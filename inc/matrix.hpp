@@ -191,17 +191,21 @@ public:
 
     bool                            IsEqual(const Matrix& other) const;
 
-    T                               DiagonalProduct() const;
-
-    T                               Determinant() const;
+    T                               Determinant();
 
     std::pair<size_t, size_t>       GetMaxInColumn(const size_t column) const;
 
     void                            SwapRows(const size_t row1, const size_t row2);
 
+    void                            Dump(std::ostream& os = std::cout) const;
+
+private:
+
     T                               GaussAlgotirhm();
 
-    void                            Dump(std::ostream& os = std::cout) const;
+    T                               DiagonalProduct() const;
+    
+    void                            ChangeRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
 
 //================================================================================//
 
@@ -257,7 +261,6 @@ std::pair<size_t, size_t> Matrix<T>::GetMaxInColumn(const size_t col_num) const
 
             max_elem.second = col_num;
         }
-
     }
 
     return max_elem;
@@ -288,22 +291,17 @@ T Matrix<T>::GaussAlgotirhm()
         if (DoubleNumbers::IsEqual(mtrx[max_elem.first][max_elem.second], 0))
             return 0;
 
-        // std::cout << mtrx[it][it] << " and " << mtrx[max_elem.first][max_elem.second] << std::endl;
-
-        // std::cout << it << " and " << max_elem.first << std::endl;
-
         if (it != max_elem.first)
         {
-            // std::cout << "swapping" << std::endl;
             mtrx.SwapRows(it, max_elem.first);
 
             sign *= -1;
 
             max_elem.first = it;
         }
-    }    
 
-    // mtrx.Dump();
+        mtrx.ChangeRows(max_elem, it);
+    }    
 
     T det = mtrx.DiagonalProduct() * sign;
 
@@ -313,7 +311,23 @@ T Matrix<T>::GaussAlgotirhm()
 //================================================================================//
 
 template<typename T>
-T Matrix<T>::Determinant() const
+void Matrix<T>::ChangeRows(const std::pair<size_t, size_t> max_elem, const size_t main_row)
+{
+    for (size_t row = main_row + 1; row < rows_; row++)
+    {
+        double substrection_elem = double (data_[row * rows_ + max_elem.second]) / double (data_[max_elem.first * rows_ + max_elem.second]);
+
+        for (size_t col = max_elem.second; col < cols_; col++)
+        {
+            data_[row * rows_ + col] -= substrection_elem * data_[max_elem.first * rows_ + col];
+        }
+    }
+}
+
+//================================================================================//
+
+template<typename T>
+T Matrix<T>::Determinant()
 {
     return GaussAlgotirhm();
 }

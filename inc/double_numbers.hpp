@@ -5,8 +5,9 @@ namespace DoubleNumbers
 {
     const double Eps = 0.00001;
 
-    template<typename T>
-    inline bool IsEqual(T num1, T num2)
+    bool IsEqual(double num1, double num2);
+
+    bool IsEqual(double num1, double num2)
     {
         return (std::abs(num1 - num2) < Eps);
     }
