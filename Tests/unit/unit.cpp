@@ -77,16 +77,44 @@ TEST(max_in_column, max_in_column)
 
     Matrix<int> m(3, 3, data.begin(), data.end());
 
-    int max[3] = {};
+    std::pair<size_t, size_t> max[3] = {};
 
     for (int i = 0; i < 3; i++)
         max[i] = m.GetMaxInColumn(i);
 
-    ASSERT_EQ(7, max[0]);
+    ASSERT_EQ(7, m[max[0].first][max[0].second]);
 
-    ASSERT_EQ(8, max[1]);
+    ASSERT_EQ(8, m[max[1].first][max[1].second]);
 
-    ASSERT_EQ(9, max[2]);
+    ASSERT_EQ(9, m[max[2].first][max[2].second]);
+}
+
+//================================================================================//
+
+TEST(max_in_column_negate, max_in_column_negate)
+{
+    using namespace MatrixSpace;
+
+    std::vector<int> data{};
+
+    data.push_back(0);
+
+    data.push_back(0);
+
+    data.push_back(-1);
+
+    data.push_back(-2);
+
+    Matrix<int> m(2, 2, data.begin(), data.end());
+
+    std::pair<size_t, size_t> max[2] = {};
+
+    for (int i = 0; i < 2; i++)
+        max[i] = m.GetMaxInColumn(i);
+
+    ASSERT_EQ(-1, m[max[0].first][max[0].second]);
+
+    ASSERT_EQ(-2, m[max[1].first][max[1].second]);
 }
 
 //================================================================================//
@@ -102,15 +130,9 @@ TEST(swap_row_test, swap_row_test)
 
     Matrix<int> m(2, 2, data.begin(), data.end());
 
-    Matrix<int>::ProxyRow row1(m[0]);
-
-    Matrix<int>::ProxyRow row2(m[1]);
-
-    // m.Dump();
+    size_t row1 = 0, row2 = 1;
 
     m.SwapRows(row1, row2);
-
-    // m.Dump();
 
     ASSERT_EQ(m[0][0], 3);
 
@@ -123,31 +145,33 @@ TEST(swap_row_test, swap_row_test)
 
 //================================================================================//
 
-// TEST(simple_determinant, simple_determinant)
-// {
-//     using namespace MatrixSpace;
+TEST(simple_determinant, simple_determinant)
+{
+    using namespace MatrixSpace;
 
-//     std::vector<int> data{3,10,11,0,5,12,0,0,2};
+    std::vector<int> data{3,10,11,0,5,12,0,0,2};
 
-//     Matrix<int> m(3,3, data.begin(), data.end());
+    Matrix<int> m(3,3, data.begin(), data.end());
 
-//     // m.Dump();
-
-//     ASSERT_EQ(30, m.DiagonalProduct());
-// }
+    ASSERT_EQ(30, m.DiagonalProduct());
+}
 
 // //================================================================================//
 
-// TEST(gauss_test, gauss_test)
-// {
-//     using namespace MatrixSpace;
+TEST(gauss_test, gauss_test)
+{
+    using namespace MatrixSpace;
 
-//     Matrix<int> m1(2, 2, 4);
+    std::vector<int> data{3,4,5,3,5,9,6,10,3};
 
-//     Matrix<int> m2 = m1.GaussAlgotirhm();
+    Matrix<int> m1(3, 3, data.begin(), data.end());
 
-//     ASSERT_EQ(5, m2[0][0]);
-// }
+    // m1.Dump();
+
+    int det = m1.GaussAlgotirhm();
+
+    ASSERT_EQ(5, det);
+}
 
 //================================================================================//
 
