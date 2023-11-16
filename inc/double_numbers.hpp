@@ -1,6 +1,8 @@
 #ifndef DOUBLE_NUMBERS_
 #define DOUBLE_NUMBERS_
 
+#include <iostream>
+
 namespace DoubleNumbers
 {
     const double Eps = 0.00001;

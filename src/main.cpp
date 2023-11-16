@@ -3,13 +3,28 @@
 #include "matrix.hpp"
 #include "double_numbers.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
-    using namespace MatrixSpace;
+    size_t size = 0;
 
-    using namespace DoubleNumbers;
+    std::cin >> size;
 
-    std::cout << Eps << std::endl;
+    std::vector<double> data{};
+
+    size_t input_size = size * size;
+
+    size_t elem = 0;
+
+    for (size_t i = 0; i < input_size; i++)
+    {
+        std::cin >> elem;
+
+        data.push_back(elem);
+    }
+
+    MatrixSpace::Matrix<double> matrix(size, size, data.begin(), data.end());
+
+    std::cout << matrix.Determinant() << std::endl;
 
     return 0;
 }

@@ -205,7 +205,7 @@ private:
 
     T                               DiagonalProduct() const;
     
-    void                            ChangeRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
+    void                            ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
 
 //================================================================================//
 
@@ -286,6 +286,8 @@ T Matrix<T>::GaussAlgotirhm()
 
     for (size_t it = 0; it < mtrx.cols_; it++)
     {
+        // mtrx.Dump();
+
         std::pair<size_t, size_t> max_elem = mtrx.GetMaxInColumn(it);
 
         if (DoubleNumbers::IsEqual(mtrx[max_elem.first][max_elem.second], 0))
@@ -300,7 +302,7 @@ T Matrix<T>::GaussAlgotirhm()
             max_elem.first = it;
         }
 
-        mtrx.ChangeRows(max_elem, it);
+        mtrx.ReCalculateRows(max_elem, it);
     }    
 
     T det = mtrx.DiagonalProduct() * sign;
@@ -311,16 +313,14 @@ T Matrix<T>::GaussAlgotirhm()
 //================================================================================//
 
 template<typename T>
-void Matrix<T>::ChangeRows(const std::pair<size_t, size_t> max_elem, const size_t main_row)
+void Matrix<T>::ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row)
 {
     for (size_t row = main_row + 1; row < rows_; row++)
     {
         double substrection_elem = double (data_[row * rows_ + max_elem.second]) / double (data_[max_elem.first * rows_ + max_elem.second]);
 
         for (size_t col = max_elem.second; col < cols_; col++)
-        {
             data_[row * rows_ + col] -= substrection_elem * data_[max_elem.first * rows_ + col];
-        }
     }
 }
 
