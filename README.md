@@ -42,3 +42,23 @@ cmake --build .
 
 ./unit
 ```
+
+Для генерации простых ete тестов:
+
+```
+cd tests/ete
+
+python3 simpletest.py
+```
+
+Для запуска ete тестов:
+
+```
+cmake -B build
+
+cd build/tests/ete
+
+cmake --build .
+
+./ete <test_name>
+```
