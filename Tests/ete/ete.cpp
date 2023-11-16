@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
     size_t input_size = size * size;
 
-    size_t elem = 0;
+    double elem = 0;
 
     for (size_t i = 0; i < input_size; i++)
     {

@@ -286,7 +286,7 @@ T Matrix<T>::GaussAlgotirhm()
 
     for (size_t it = 0; it < mtrx.cols_; it++)
     {
-        // mtrx.Dump();
+        mtrx.Dump();
 
         std::pair<size_t, size_t> max_elem = mtrx.GetMaxInColumn(it);
 
