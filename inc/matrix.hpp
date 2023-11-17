@@ -191,20 +191,24 @@ public:
 
     bool                            IsEqual(const Matrix& other) const;
 
+    T                               DiagonalProduct() const;
+
     T                               Determinant();
+
+    void                            Dump(std::ostream& os = std::cout) const;
+
+private:
+    
+    Matrix&                         Transpose() &;
 
     std::pair<size_t, size_t>       GetMaxInColumn(const size_t column) const;
 
     void                            SwapRows(const size_t row1, const size_t row2);
 
-    void                            Dump(std::ostream& os = std::cout) const;
-    
-    T                               DiagonalProduct() const;
-
-private:
-
     T                               GaussAlgotirhm();
-    
+
+    bool                            IsMatrixTriangleDown() const;
+
     void                            ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
 
 //================================================================================//
@@ -228,6 +232,26 @@ bool Matrix<T>::IsEqual(const Matrix& other) const
     }
 
     return true;
+}
+
+//================================================================================//
+
+template<typename T>
+Matrix<T>& Matrix<T>::Transpose() &
+{
+    Matrix& ref = *this;
+
+    Matrix cpy  = ref;
+
+    std::swap(ref.cols_, ref.rows_);
+
+    for (size_t row = 0; row < rows_; row++)
+    {
+        for (size_t col = 0; col < cols_; col++)
+            ref[row][col] = cpy[col][row];
+    }
+
+    return *this;
 }
 
 //================================================================================//
@@ -284,6 +308,14 @@ T Matrix<T>::GaussAlgotirhm()
 {
     Matrix mtrx(*this);
 
+    // mtrx.Dump();
+
+    if (mtrx.IsMatrixTriangleDown())
+    {
+        mtrx.Transpose();
+        // mtrx.Dump();
+    }
+
     int sign = 1;
 
     for (size_t it = 0; it < mtrx.cols_; it++)
@@ -313,6 +345,31 @@ T Matrix<T>::GaussAlgotirhm()
     T det = mtrx.DiagonalProduct() * sign;
 
     return det;
+}
+
+//================================================================================//
+
+template<typename T>
+bool Matrix<T>::IsMatrixTriangleDown() const    //      || 1 0 0 0 ||
+{                                               //      || 1 2 0 0 ||
+    auto& m_ref = *this;                        //      || 1 2 3 0 ||
+                                                //      || 1 2 3 4 ||
+    bool is_triangle = true;
+
+    for (size_t row = 0; row < rows_; row++)
+    {
+        for (size_t col = row + 1; col < cols_; col++)
+        {
+            if (!DoubleNumbers::IsEqual(m_ref[row][col], 0))
+            {
+                is_triangle = false;
+
+                break;
+            }
+        }
+    }
+
+    return is_triangle;
 }
 
 //================================================================================//
