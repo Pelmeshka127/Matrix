@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
@@ -169,6 +170,125 @@ TEST(gauss_test, gauss_test)
     int det = m1.Determinant();
 
     ASSERT_EQ(-45, det);
+}
+
+//================================================================================//
+
+void EteTestRunner(const char* src, const char* ans)
+{
+    std::ifstream test_file{};
+
+    test_file.open(src);
+
+    size_t size = 0;
+
+    test_file >> size;
+
+    std::vector<double> data{};
+
+    size_t input_size = size * size;
+
+    double elem = 0;
+
+    for (size_t i = 0; i < input_size; i++)
+    {
+        test_file >> elem;
+
+        data.push_back(elem);
+    }
+
+    test_file.close();
+
+    MatrixSpace::Matrix<double> matrix(size, size, data.begin(), data.end());
+
+    // matrix.Dump();
+
+    double det = matrix.Determinant();
+
+    std::ifstream ans_file{};
+
+    ans_file.open(ans);
+
+    double answ = 0;
+
+    ans_file >> answ;
+
+    ans_file.close();
+
+    // ASSERT_EQ(det, answ);
+
+    ASSERT_EQ(DoubleNumbers::IsEqual(det, answ), true);
+}
+
+//================================================================================//
+
+TEST(EteTest, test1)
+{
+    EteTestRunner("../../../tests/ete/001.dat", "../../../tests/ete/001.answer");
+}
+
+//================================================================================//
+
+
+TEST(EteTest, test2)
+{
+    EteTestRunner("../../../tests/ete/002.dat", "../../../tests/ete/002.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test3)
+{
+    EteTestRunner("../../../tests/ete/003.dat", "../../../tests/ete/003.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test4)
+{
+    EteTestRunner("../../../tests/ete/004.dat", "../../../tests/ete/004.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test5)
+{
+    EteTestRunner("../../../tests/ete/005.dat", "../../../tests/ete/005.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test6)
+{
+    EteTestRunner("../../../tests/ete/006.dat", "../../../tests/ete/006.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test7)
+{
+    EteTestRunner("../../../tests/ete/007.dat", "../../../tests/ete/007.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test8)
+{
+    EteTestRunner("../../../tests/ete/008.dat", "../../../tests/ete/008.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test9)
+{
+    EteTestRunner("../../../tests/ete/009.dat", "../../../tests/ete/009.answer");
+}
+
+//================================================================================//
+
+TEST(EteTest, test10)
+{
+    EteTestRunner("../../../tests/ete/010.dat", "../../../tests/ete/010.answer");
 }
 
 //================================================================================//

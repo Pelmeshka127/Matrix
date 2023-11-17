@@ -198,12 +198,12 @@ public:
     void                            SwapRows(const size_t row1, const size_t row2);
 
     void                            Dump(std::ostream& os = std::cout) const;
+    
     T                               DiagonalProduct() const;
 
 private:
 
     T                               GaussAlgotirhm();
-
     
     void                            ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
 

@@ -51,6 +51,13 @@ cd tests/ete
 python3 simpletest.py
 ```
 
+Для генерации больших ete тестов рекоммендуется:
+
+```
+cd tests/ete
+
+python3 largematrix.py```
+
 Для запуска ete тестов:
 
 ```

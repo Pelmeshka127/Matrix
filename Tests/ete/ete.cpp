@@ -36,13 +36,13 @@ int main(int argc, char** argv)
 
     // std::cout << "DET start" << std::endl;
 
-    std::cout << matrix.Determinant() << std::endl;
+    std::cout << std::fixed << matrix.Determinant() << std::endl;
 
     // std::cout << "DET end" << std::endl;
 
     // std::cout << "DIAG start" << std::endl;
 
-    std::cout << matrix.DiagonalProduct() << std::endl;
+    std::cout << std::fixed << matrix.DiagonalProduct() << std::endl;
 
     // std::cout << "DIAG end" << std::endl;
 
