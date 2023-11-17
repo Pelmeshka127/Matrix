@@ -12,7 +12,7 @@ namespace MatrixSpace
 //================================================================================//
 
 template<typename T>
-class Matrix
+class Matrix final
 {
 
 //================================================================================//
@@ -198,12 +198,12 @@ public:
     void                            SwapRows(const size_t row1, const size_t row2);
 
     void                            Dump(std::ostream& os = std::cout) const;
+    T                               DiagonalProduct() const;
 
 private:
 
     T                               GaussAlgotirhm();
 
-    T                               DiagonalProduct() const;
     
     void                            ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
 
@@ -240,7 +240,9 @@ T Matrix<T>::DiagonalProduct() const
     for (size_t row = 0, col = 0; row < rows_; row++, col++)
     {
         det *= data_[row * rows_ + col];
+        // std::cout << det << std::endl;
     }
+
 
     return det;
 }
@@ -286,12 +288,15 @@ T Matrix<T>::GaussAlgotirhm()
 
     for (size_t it = 0; it < mtrx.cols_; it++)
     {
-        mtrx.Dump();
+        // mtrx.Dump();
 
         std::pair<size_t, size_t> max_elem = mtrx.GetMaxInColumn(it);
 
         if (DoubleNumbers::IsEqual(mtrx[max_elem.first][max_elem.second], 0))
+        {
+            // std::cout << mtrx[max_elem.first][max_elem.second] << std::endl;
             return 0;
+        }
 
         if (it != max_elem.first)
         {

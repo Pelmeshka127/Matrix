@@ -5,7 +5,7 @@
 
 namespace DoubleNumbers
 {
-    const double Eps = 0.00001;
+    const double Eps = 1e-15;
 
     bool IsEqual(double num1, double num2);
 

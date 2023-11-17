@@ -17,8 +17,6 @@ for file in all_files:
         if (test_number > max_test_number):
             max_test_number = test_number
 
-dim = matrix_size * matrix_size
-
 file = open(str(max_test_number + 1).zfill(3) + ".dat", "w")
 
 file.write(str(matrix_size) + '\n\n')
