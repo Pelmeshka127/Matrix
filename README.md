@@ -56,7 +56,8 @@ python3 simpletest.py
 ```
 cd tests/ete
 
-python3 largematrix.py```
+python3 largematrix.py
+```
 
 Для запуска ete тестов:
 
