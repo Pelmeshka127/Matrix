@@ -24,6 +24,8 @@ int main(int argc, char** argv)
 
     MatrixSpace::Matrix<double> matrix(size, size, data.begin(), data.end());
 
+    matrix.Dump();
+
     std::cout << matrix.Determinant() << std::endl;
 
     return 0;
