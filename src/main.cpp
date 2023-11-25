@@ -22,9 +22,9 @@ int main(int argc, char** argv)
         data.push_back(elem);
     }
 
-    MatrixSpace::Matrix<double> matrix(size, size, data.begin(), data.end());
+    MatrixSpace::Matrix<int> matrix(size, size, data.begin(), data.end());
 
-    matrix.Dump();
+    // matrix.Dump();
 
     std::cout << matrix.Determinant() << std::endl;
 

@@ -83,6 +83,25 @@ public:
 
 //================================================================================//
 
+    template<typename U> explicit
+    Matrix(const Matrix<U>& rhs) :                             // Copy Constructor
+        Buffer<T>{rhs.GetRows() * rhs.GetCols()},
+        rows_{rhs.GetRows()}, 
+        cols_{rhs.GetCols()}
+    {
+        // std::cout << "Copy Ctor" << std::endl;
+
+        for (int i = 0; i < rows_; i++)
+        {
+            for (int j = 0; j < cols_; j++)
+            {
+                data_[i * rows_ + j] = static_cast<T>(rhs[i][j]);
+            }
+        }
+    }
+
+//================================================================================//
+
     Matrix& operator=(const Matrix& rhs)                    // Copy Assignment
     {
         // std::cout << "Copy Asgn" << std::endl;
@@ -155,19 +174,19 @@ public:
 
     void                            Dump(std::ostream& os = std::cout) const;
 
-private:
-    
     Matrix&                         Transpose() &;
-
+    
     std::pair<size_t, size_t>       GetMaxInColumn(const size_t column) const;
 
     void                            SwapRows(const size_t row1, const size_t row2);
 
-    T                               GaussAlgotirhm();
-
     bool                            IsMatrixTriangleDown() const;
 
     void                            ReCalculateRows(const std::pair<size_t, size_t> max_elem, const size_t main_row);
+
+private:
+
+    T                               GaussAlgotirhm();
 
 //================================================================================//
 
@@ -264,24 +283,17 @@ void Matrix<T>::SwapRows(const size_t row1, const size_t row2)
 template<typename T>
 T Matrix<T>::GaussAlgotirhm()
 {
-    // Dump();
-
-    Matrix mtrx(*this);
-
-    // mtrx.Dump();
+    Matrix<double> mtrx(*this);
 
     if (mtrx.IsMatrixTriangleDown())
     {
         mtrx.Transpose();
-        // mtrx.Dump();
     }
 
     int sign = 1;
 
-    for (size_t it = 0; it < mtrx.cols_; it++)
+    for (size_t it = 0; it < mtrx.GetCols(); it++)
     {
-        // mtrx.Dump();
-
         std::pair<size_t, size_t> max_elem = mtrx.GetMaxInColumn(it);
 
         if (DoubleNumbers::IsEqual(mtrx[max_elem.first][max_elem.second], 0))
