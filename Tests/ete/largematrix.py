@@ -33,7 +33,7 @@ if (half_space % 2 == 0):
 
         for j in range(matrix_size - i):
             
-            elem = random.randint(-2, 2)
+            elem = random.randint(-4, 4) / random.randint(1, 4)
 
             if (elem == 0):
                 elem = 1
@@ -48,7 +48,7 @@ else:
 
         for j in range(i + 1):
 
-            elem = random.randint(-2, 2)
+            elem = random.randint(-4, 4) / random.randint(1, 4)
 
             if (elem == 0):
                 elem = 1

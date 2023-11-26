@@ -27,6 +27,10 @@ for i in range(matrix_size):
 
         elem = random.randint(-matrix_size, matrix_size)
 
+        delit = random.randint(1, 10)
+
+        elem = elem / delit
+
         file.write(str(elem) + ' ')
 
     file.write('\n')

@@ -34,17 +34,9 @@ int main(int argc, char** argv)
 
     std::clock_t start = clock();
 
-    // std::cout << "DET start" << std::endl;
-
     std::cout << std::fixed << matrix.Determinant() << std::endl;
 
-    // std::cout << "DET end" << std::endl;
-
-    // std::cout << "DIAG start" << std::endl;
-
     std::cout << std::fixed << matrix.DiagonalProduct() << std::endl;
-
-    // std::cout << "DIAG end" << std::endl;
 
     std::cout << "Total time is " << double (clock() - start) / CLOCKS_PER_SEC << std::endl;
 
