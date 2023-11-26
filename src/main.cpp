@@ -22,7 +22,7 @@ int main(int argc, char** argv)
         data.push_back(elem);
     }
 
-    MatrixSpace::Matrix<int> matrix(size, size, data.begin(), data.end());
+    MatrixSpace::Matrix<double> matrix(size, size, data.begin(), data.end());
 
     // matrix.Dump();
 
